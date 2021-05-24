@@ -1,0 +1,18 @@
+Package: tidyaux
+Title: tidyaux
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Kira",
+           family = "McDonald",
+           role = c("aut", "cre"),
+           email = "kira.mcd.99@gmail.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Helper functions that I find myself using consistently, which tend to depend on the R tidyverse libraries
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+LazyData: true
+Suggests:
+  tidyverse
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
