@@ -19,7 +19,7 @@ quantiles.across.groups <- function(gx,
 
   .colm <- rlang::sym(.colm)
   # quartiles across models
-  grpd_summaries %>%
+  gx %>%
     summarise(
       bucket = names(
         quantile(!!.colm, seq(0,1, ntile))
