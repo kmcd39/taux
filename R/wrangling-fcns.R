@@ -31,3 +31,20 @@ split_and_key <- function(x, .cols) {
 
   return(out)
 }
+
+
+#' named_map_dfr
+#'
+#' Uses names from a named list in an identifier column alongside other output in
+#' map_dfr
+#'
+#' @export
+named_map_dfr <- function(.x, .f, ...) {
+
+  require(purrr)
+
+  map(.x, .f, ...) %>%
+    map2_dfr(., names(.),
+           ~tibble(div.type = .y,
+                   bind_rows(.x)))
+}
