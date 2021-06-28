@@ -33,18 +33,20 @@ split_and_key <- function(x, .cols) {
 }
 
 
-#' named_map_dfr
+#' rbind.key
 #'
-#' Uses names from a named list in an identifier column alongside other output in
-#' map_dfr
+#'
+#' Row binds a named list of tables, using element names to build a new identifier
+#' column.
+#'
+#' @param x named list of data.frames to rbind
 #'
 #' @export
-named_map_dfr <- function(.x, .f, ...) {
+rbind.key <- function(x, ids_to = "id", ...) {
 
   require(purrr)
 
-  map(.x, .f, ...) %>%
-    map2_dfr(., names(.),
-           ~tibble(div.type = .y,
+  map2_dfr(x, names(x),
+           ~tibble(!!rlang::sym(ids_to) := .y,
                    bind_rows(.x)))
 }
