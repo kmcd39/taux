@@ -41,7 +41,7 @@ split_and_key <- function(x, .cols) {
 #'
 #' @param x named list of data.frames to rbind
 #'
-#' @export
+#' @export rbind.key
 rbind.key <- function(x, ids_to = "id", ...) {
 
   require(purrr)
