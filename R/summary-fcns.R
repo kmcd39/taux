@@ -7,9 +7,9 @@
 nas.by.colm <- function(x, proportion = F) {
 
   if(!proportion)
-    out <- x %>% map( ~sum(is.na(.x)) )
+    out <- x %>% map_dbl( ~sum(is.na(.x)) )
   else
-    out <- x %>% map( ~sum(is.na(.x)) / length(.x) )
+    out <- x %>% map_dbl( ~sum(is.na(.x)) / length(.x) )
 
   return(out)
 }
