@@ -1,4 +1,19 @@
 
+#' nas.by.colm
+#'
+#' Counts NAs for every column, or gets proportion of rows that are NA
+#'
+#' @export
+nas.by.colm <- function(x, proportion = F) {
+
+  if(!proportion)
+    out <- x %>% map( ~sum(is.na(.x)) )
+  else
+    out <- x %>% map( ~sum(is.na(.x)) / length(.x) )
+
+  return(out)
+}
+
 
 #' quantiles.across.groups
 #'

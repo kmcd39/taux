@@ -1,5 +1,5 @@
-Package: tidyaux
-Title: tidyaux
+Package: taux
+Title: taux
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Kira",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "kira.mcd.99@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: Helper functions that I find myself using consistently, which tend to depend on the R tidyverse libraries
+Description: Helper functions that I find myself using consistently, which tend to depend on the R tidyverse libraries. taux == auxilary tidyverse fcns
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
