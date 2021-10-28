@@ -1,10 +1,10 @@
 
-#' nas.by.colm
+#' sum.NAs
 #'
 #' Counts NAs for every column, or gets proportion of rows that are NA
 #'
-#' @export
-nas.by.colm <- function(x, proportion = F) {
+#' @export sum.NAs
+sum.NAs <- function(x, proportion = F) {
 
   if(!proportion)
     out <- x %>% map_dbl( ~sum(is.na(.x)) )
