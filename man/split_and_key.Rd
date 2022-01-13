@@ -10,7 +10,8 @@ split_and_key(x, .cols)
 \item{x}{object that inherits \code{data.frame}}
 
 \item{cols}{a character vector of columns to split/groupby. Concatenation of these
-column names, separated by "-" will form the name for each resulting df after split.}
+column names, separated by "-" will form the name for each resulting df after
+split.}
 }
 \description{
 Like \link{group_split} but uses grouping cols to form identifiers and uses these as
@@ -18,4 +19,8 @@ names for elements of split df. A broader purpose fcn that I may move elsewhere 
 some point. Some surprise/discussion that this functionality isn't already built
 into dplyr:
 https://stackoverflow.com/questions/57107721/how-to-name-the-list-of-the-group-split-output-in-dplyr
+}
+\details{
+Reminder that a nest/unnest workflow is often better in most cases, rather than
+splitting
 }
