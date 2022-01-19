@@ -6,12 +6,12 @@
 #' @import tidyverse
 #'
 #' @export sum.NAs
-sum.NAs <- function(x, proportion = F) {
+sum.NAs <- function(x, perc = F) {
 
-  if(!proportion)
+  if(!perc)
     out <- x %>% purrr::map_dbl( ~sum(is.na(.x)) )
   else
-    out <- x %>% purrr::map_dbl( ~sum(is.na(.x)) / length(.x) )
+    out <- x %>% purrr::map_dbl( ~{sum(is.na(.x)) / nrow(x)} )
 
   return(out)
 }
@@ -31,7 +31,8 @@ count.across <- function(x, .cols = everything()) {
   colnames(x) %>%
     purrr::map( ~count(x,
                        !!rlang::sym(.)) ) %>%
-    purrr::map( ~arrange(., desc(n)) )
+    purrr::map( ~arrange(., desc(n)) ) %>%
+    setNames(colnames(x))
 
 }
 

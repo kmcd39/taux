@@ -11,7 +11,7 @@
 colm.in.tblList <- function(xL, regex, return.tbls = T) {
 
   index <-
-    purrr::map_lgl( van,
+    purrr::map_lgl( xL,
                     ~any(grepl(regex, colnames(.x)))
     )
 
