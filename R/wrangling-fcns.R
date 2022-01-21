@@ -1,22 +1,29 @@
 
 #' colm.in.tblList
 #'
-#' Given a list of data.frames, find which ones have a column that match a regex string.
+#' Given a list of data.frames, find which ones have a column that match a regex
+#' string.
 #'
 #' @param xL list of data.frames
 #' @param regex regular expression
-#' @param return.tbls whether to return tables (default) or index vector
+#' @param return.tbls whether to return tables (default) or names of tables
+#'   containing column (or index to those tables if unnamed `xL`)
 #'
 #' @export colm.in.tblList
-colm.in.tblList <- function(xL, regex, return.tbls = T) {
+colm.in.tblList <- function(xL, regex, return.tbls = F) {
 
   index <-
     purrr::map_lgl( xL,
                     ~any(grepl(regex, colnames(.x)))
     )
 
-  if(!return.tbls)
-    return(index)
+  if(!return.tbls){
+
+    if(!is.null(names(index)))
+      return(names(index)[index])
+    else
+      return(index)
+  }
 
   xL[index]
 }

@@ -4,15 +4,17 @@
 \alias{colm.in.tblList}
 \title{colm.in.tblList}
 \usage{
-colm.in.tblList(xL, regex, return.tbls = T)
+colm.in.tblList(xL, regex, return.tbls = F)
 }
 \arguments{
 \item{xL}{list of data.frames}
 
 \item{regex}{regular expression}
 
-\item{return.tbls}{whether to return tables (default) or index vector}
+\item{return.tbls}{whether to return tables (default) or names of tables
+containing column (or index to those tables if unnamed \code{xL})}
 }
 \description{
-Given a list of data.frames, find which ones have a column that match a regex string.
+Given a list of data.frames, find which ones have a column that match a regex
+string.
 }

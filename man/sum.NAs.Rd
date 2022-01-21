@@ -4,7 +4,7 @@
 \alias{sum.NAs}
 \title{sum.NAs}
 \usage{
-\method{sum}{NAs}(x, proportion = F)
+\method{sum}{NAs}(x, perc = F)
 }
 \description{
 Counts NAs for every column, or gets proportion of rows that are NA
