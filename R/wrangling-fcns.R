@@ -87,3 +87,34 @@ rbind.key <- function(x, ids_to = "id") {
            ~tibble(!!rlang::sym(ids_to) := .y,
                    bind_rows(.x)))
 }
+
+
+
+
+#' read.tbList
+#'
+#' Read and name a tablelist, given a directory containing multiple csvs
+#'
+#' @param ddir directory containing tables to read.
+#' @param pattern,delim passed onto `list.files` and `vroom::vroom`, respectively
+#'
+#' @export read.tbList
+read.tbList <- function(ddir
+                        , pattern = 'csv$'
+                        , delim = ',') {
+
+  # filenames in directory matching pattern
+  fns <- list.files(ddir
+                    , pattern = pattern)
+  # read all from fns
+  xL <- map( paste0(ddir, fns)
+             , ~{ print(.x)
+               vroom::vroom(.x
+                            ,delim=delim)})
+
+  # drop file extension to make table name
+  nms <- gsub('\\.csv$', '', fns)
+  names(xL) <- nms
+
+  return(xL)
+}
