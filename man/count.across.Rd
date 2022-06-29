@@ -4,7 +4,7 @@
 \alias{count.across}
 \title{count.across}
 \usage{
-count.across(x, .cols = everything())
+\method{count}{across}(x, .cols = everything())
 }
 \arguments{
 \item{x}{data.frame}
