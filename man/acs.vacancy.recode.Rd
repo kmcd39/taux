@@ -16,6 +16,8 @@ Recodes demographic info, as from table B25004 Was developed for 2019 ACS;
 could break if they change encodings.
 }
 \details{
+Universe for this table is Vacant Housing Units.
+
 B25004_001	Total
 B25004_002	Total: For rent
 B25004_003	Total: Rented, not occupied

@@ -17,6 +17,8 @@ could break if they change encodings. Note also table B25035_001 is just
 median year structure built.
 }
 \details{
+Universe for this table is Housing Units.
+
 B25034_001	Total
 B25034_002	Total: Built 2014 or later
 B25034_003	Total: Built 2010 to 2013

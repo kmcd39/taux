@@ -18,6 +18,8 @@ Recodes demographic info, as from table B03002. Was developed for 2019 ACS;
 could break if they change encodings.
 }
 \details{
+Universe is Total Population.
+
 Encodings this was developed for:
 B03002_001	Total
 B03002_002	Total: Not Hispanic or Latino

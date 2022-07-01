@@ -93,6 +93,8 @@ pull.acs.metadata <- function(year
 #' Recodes demographic info, as from table B03002. Was developed for 2019 ACS;
 #' could break if they change encodings.
 #'
+#' Universe is Total Population.
+#'
 #' Encodings this was developed for:
 #' B03002_001	Total
 #' B03002_002	Total: Not Hispanic or Latino
@@ -139,15 +141,30 @@ acs.demographic.recode <- function(demos
       ,TRUE ~ label)
     )
 
+  # reorder groups in reverse (so "Other" is last)
+  demos$recode <- factor(demos$recode
+                         ,levels =
+                           rev(
+                           c(                            'White alone'
+                           ,'Black or African American alone'
+                           ,'Hispanic or Latino'
+                           ,'Asian alone'
+                           ,'American Indian and Alaska Native alone'
+                           ,'Native Hawaiian and Other Pacific Islander alone'
+                           ,'Other group'
+                         )))
+
   return(demos)
 }
 
 
 
-#'acs.vacancy.recode
+#' acs.vacancy.recode
 #'
 #' Recodes demographic info, as from table B25004 Was developed for 2019 ACS;
 #' could break if they change encodings.
+#'
+#' Universe for this table is Vacant Housing Units.
 #'
 #' B25004_001	Total
 #' B25004_002	Total: For rent
@@ -175,6 +192,16 @@ acs.vacancy.recode <- function(vacancy
       var %in% 1:5 ~ 'For rent/sale, or just rented/sold'
       ,TRUE ~ label)
     )
+
+  # also use factor vacancy status
+  vacancy$recode <- factor(vacancy$recode
+                           , levels = c(
+                              'For migrant workers'
+                             ,'For seasonal, recreational, or occasional use'
+                             ,'Other vacant'
+                             ,'For rent/sale, or just rented/sold'
+                           ))
+
   return(vacancy)
 }
 
@@ -186,6 +213,8 @@ acs.vacancy.recode <- function(vacancy
 #' Recodes demographic info, as from table B25034 Was developed for 2019 ACS;
 #' could break if they change encodings. Note also table B25035_001 is just
 #' median year structure built.
+#'
+#' Universe for this table is Housing Units.
 #'
 #' B25034_001	Total
 #' B25034_002	Total: Built 2014 or later
@@ -220,6 +249,13 @@ acs.bldg.age.recode <- function(bldgs
       ,var %in% c(8:11) ~ 'Built before 1970'
       ,TRUE ~ label
     ))
+
+  # as factor
+  bldgs$recode <- factor(bldgs$recode
+                         ,levels = rev(c('Built before 1970'
+                                         ,'Built from 1970-1999'
+                                         ,'Built since 2000')))
+
   return(bldgs)
 }
 

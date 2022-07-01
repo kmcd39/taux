@@ -13,7 +13,7 @@ meta <- pull.acs.metadata(year = 2019)
 
 
 vacancyts <- multiyr.acs.wrapper('B25034'
-                               ,state = 6
+                               ,state = 44
                                , geo = 'tract'
                                ,metadata = meta
                                )
@@ -33,4 +33,47 @@ vacancyts <- vacancyts %>%
 tmp <- vacancyts %>%
   group_by(geoid, yr, recode) %>%
   summarise(n = sum(estimate))
+tmp$recode
+
+
+# demos -------------------------------------------------------------------
+
+
+demots <- multiyr.acs.wrapper('B03002'
+                              ,state = 44
+                              , geo = 'county subdivision'
+                              ,metadata = meta)
+
+tmp <- demots %>%
+  acs.demographic.recode()
+
+tmp <- tmp %>%
+  group_by(yr, recode) %>%
+  summarise(n = sum(estimate))
+tmp %>%
+  ggplot( aes(x = recode
+              ,y = n
+              ,fill = n) ) +
+  geom_col() +
+  facet_wrap( vars(yr)) +
+  coord_flip()
+
+
+# try it with dif groups pulled out.
+
+tmp <- demots %>%
+  acs.demographic.recode(other.vars = c(8:11))
+
+tmp <- tmp %>%
+  group_by(yr, recode) %>%
+  summarise(n = sum(estimate))
+tmp %>%
+  ggplot( aes(x = recode
+              ,y = n
+              ,fill = n) ) +
+  geom_col() +
+  facet_wrap( vars(yr)) +
+  coord_flip()
+
+# tmp$recode <- factor(tmp$recode, levels = rev(levels(tmp$recode)))
 # dope!
