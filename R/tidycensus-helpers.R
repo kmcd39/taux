@@ -314,7 +314,7 @@ acs.rentburden.recode <- function(rentb
 }
 
 
-#' acs.commute.mode
+#' acs.commute.recode
 #'
 #' Uses table B08006, SEX OF WORKERS BY MEANS OF TRANSPORTATION TO WORK.
 #' Immediately trims the breakdown by sex.
@@ -323,8 +323,8 @@ acs.rentburden.recode <- function(rentb
 #' @param separate.carpools whether to keep carpoolers separate
 #' @inheritParams acs.demographic.recode
 #'
-#' @export acs.commute.mode
-acs.commute.mode <- function(commutes
+#' @export acs.commute.recode
+acs.commute.recode <- function(commutes
                              ,separate.carpools = F
                              ,filter.aggregates = T
                              ,drop.obscure = T) {
