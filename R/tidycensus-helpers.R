@@ -145,7 +145,7 @@ acs.demographic.recode <- function(demos
   demos$recode <- factor(demos$recode
                          ,levels =
                            rev(
-                           c(                            'White alone'
+                           c('White alone'
                            ,'Black or African American alone'
                            ,'Hispanic or Latino'
                            ,'Asian alone'
@@ -259,4 +259,120 @@ acs.bldg.age.recode <- function(bldgs
   return(bldgs)
 }
 
+
+
+#' acs.rentburden.recode
+#'
+#' Recodes rent burden info, as from table B25070 ("GROSS RENT AS A PERCENTAGE
+#' OF HOUSEHOLD INCOME IN THE PAST 12 MONTHS"). Was developed for 2019 ACS;
+#' could break if they change encodings.
+#'
+#' Universe for this table is Renter-occupied Housing Units.
+#'
+#' B25070_001	Total
+#' B25070_002	Total: Less than 10.0 percent
+#' B25070_003	Total: 10.0 to 14.9 percent
+#' B25070_004	Total: 15.0 to 19.9 percent
+#' B25070_005	Total: 20.0 to 24.9 percent
+#' B25070_006	Total: 25.0 to 29.9 percent
+#' B25070_007	Total: 30.0 to 34.9 percent
+#' B25070_008	Total: 35.0 to 39.9 percent
+#' B25070_009	Total: 40.0 to 49.9 percent
+#' B25070_010	Total: 50.0 percent or more
+#' B25070_011	Total: Not computed
+#'
+#' @param rentb a vacancy table, as from `multiyr.acs.wrapper(B25004, ...)`.
+#' @inheritParams acs.demographic.recode
+#'
+#' @export acs.rentburden.recode
+acs.rentburden.recode <- function(rentb
+                               ,filter.aggregates = T
+                               ) {
+
+  if(filter.aggregates)
+    rentb <- rentb %>%
+      filter( ! var %in% c(1) )
+
+  rentb <- rentb %>%
+    mutate(recode = case_when(
+      var %in% c(2:6) ~ 'Not rent-burdened (<30% of income)'
+      ,var %in% c(7:9) ~ 'Rent-burdened (30-50% of income)'
+      ,var %in% c(10) ~ 'Very rent-burdened (>50% of income)'
+      ,TRUE ~ label
+      )
+    )
+
+  # also use factor rentb status
+  rentb$recode <- factor(rentb$recode
+                           , levels = c(
+                              'Not rent-burdened (<30% of income)'
+                             ,'Rent-burdened (30-50% of income)'
+                             ,'Very rent-burdened (>50% of income)'
+                           ))
+
+  return(rentb)
+}
+
+
+#' acs.commute.mode
+#'
+#' Uses table B08006, SEX OF WORKERS BY MEANS OF TRANSPORTATION TO WORK.
+#' Immediately trims the breakdown by sex.
+#'
+#' @param commutes a pull of table B08006, as from `multiyr.acs.wrapper(...)`.
+#' @param separate.carpools whether to keep carpoolers separate
+#' @inheritParams acs.demographic.recode
+#'
+#' @export acs.commute.mode
+acs.commute.mode <- function(commutes
+                             ,separate.carpools = F
+                             ,filter.aggregates = T
+                             ,drop.obscure = T) {
+
+
+  commutes <- commutes %>%
+    filter(var %in% 1:16)
+
+  if(filter.aggregates)
+    commutes <- commutes %>%
+      filter( ! var %in% c(1,2, 8) )
+
+  if(drop.obscure)
+    commutes <- commutes %>%
+      filter( ! var %in% c(16) )
+
+
+  commutes <- commutes %>%
+    mutate(recode = case_when(
+      var %in% c(3) ~ 'Drove alone'
+      ,var %in% c(4:7) ~ 'Carpooled'
+      ,var %in% c(8:13) ~ 'Public transit'
+      ,var %in% c(14:15) ~ 'Active transit'
+      ,TRUE ~ label    )
+    )
+
+
+  if( !separate.carpools )
+    commutes <- commutes %>%
+    mutate(recode = case_when(
+      var %in% c(3:7) ~ 'Car'
+      ,TRUE ~ recode    )
+    )
+
+  # also use factor commutes status
+  commutes$recode <- factor(commutes$recode
+                         , levels = c(
+                           'Drove alone'
+                           ,'Carpooled'
+                           ,'Car'
+                           ,'Public transit'
+                           ,'Active transit'
+                         ))
+
+  return(commutes)
+
+}
+
 # scratch -----------------------------------------------------------------
+
+
