@@ -4,10 +4,12 @@
 \alias{mass.acs.pull.wrapper}
 \title{mass.acs.pull.wrapper}
 \usage{
-mass.acs.pull.wrapper(states, yrs, geo)
+mass.acs.pull.wrapper(states, years, geo)
 }
 \arguments{
 \item{states}{vector of state FIPS or 2-letters}
+
+\item{years}{vector of years}
 
 \item{geo}{selection geography, passed onto \code{tidycensus}}
 }
