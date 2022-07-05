@@ -4,12 +4,20 @@
 \alias{pull.tidycensus.median.tables}
 \title{pull.tidycensus.median.tables}
 \usage{
-\method{pull}{tidycensus.median.tables}(states, years, geo = "tract", tbls = c("B19013", "B25058"))
+\method{pull}{tidycensus.median.tables}(
+  states,
+  years,
+  geo = "tract",
+  tbls = c("B19013", "B25058"),
+  survey = "acs5"
+)
 }
 \arguments{
 \item{states}{vector of state FIPS or 2-letters}
 
 \item{years}{vector of years}
+
+\item{geo}{selection geography, passed onto \code{tidycensus}}
 }
 \description{
 Pulls median tables, like hh income and contract rent.

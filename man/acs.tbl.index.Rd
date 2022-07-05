@@ -4,7 +4,11 @@
 \alias{acs.tbl.index}
 \title{acs.tbl.index}
 \usage{
-acs.tbl.index()
+acs.tbl.index(
+  tables = c("B03002", "B25034", "B25004", "B25070", "B19013", "B25058", "B08006"),
+  metadata = NULL,
+  year = 2019
+)
 }
 \description{
 Reminds you what selected table names correspond to

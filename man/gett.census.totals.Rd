@@ -4,10 +4,14 @@
 \alias{gett.census.totals}
 \title{gett.census.totals}
 \usage{
-gett.census.totals(states, year, geo = "tract", survey = "acs5")
+gett.census.totals(states, years, geo = "tract", survey = "acs5")
 }
 \arguments{
 \item{states}{vector of state FIPS or 2-letters}
+
+\item{years}{vector of years}
+
+\item{geo}{selection geography, passed onto \code{tidycensus}}
 }
 \description{
 Gets totals for area. Like population, households, housing units, and land

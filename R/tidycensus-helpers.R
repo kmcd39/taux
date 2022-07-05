@@ -25,7 +25,8 @@ multiyr.acs.wrapper <- function( tables
                                  , geo
                                  , years = c(2010, 2015, 2019)
                                  , metadata = NULL
-                                 ,cache = T) {
+                                 ,cache = T
+                                 ,survey = 'acs5') {
 
 
   if( is.null(metadata))
@@ -40,7 +41,7 @@ multiyr.acs.wrapper <- function( tables
                    ,table = .x
                    ,year = .y
                    ,state = states
-                   ,survey = "acs5"
+                   ,survey = survey
                    ,cache_table = cache
                  ) %>%
                      mutate(tabl = .x
@@ -71,6 +72,8 @@ multiyr.acs.wrapper <- function( tables
 pull.acs.metadata <- function(year
                               ,dataset = 'acs5'
                               ,cache = T) {
+
+  require(tidyverse)
 
   meta <- tidycensus::load_variables(year = year
                              ,dataset = dataset
@@ -267,19 +270,18 @@ acs.bldg.age.recode <- function(bldgs
 #' OF HOUSEHOLD INCOME IN THE PAST 12 MONTHS"). Was developed for 2019 ACS;
 #' could break if they change encodings.
 #'
+#' Note: from socialexplorer.com: "Units for which no rent is paid and units
+#' occupied by households that reported no income or a net loss comprise the
+#' category, 'Not computed.'"
+#'
 #' Universe for this table is Renter-occupied Housing Units.
 #'
-#' B25070_001	Total
-#' B25070_002	Total: Less than 10.0 percent
-#' B25070_003	Total: 10.0 to 14.9 percent
-#' B25070_004	Total: 15.0 to 19.9 percent
-#' B25070_005	Total: 20.0 to 24.9 percent
-#' B25070_006	Total: 25.0 to 29.9 percent
-#' B25070_007	Total: 30.0 to 34.9 percent
-#' B25070_008	Total: 35.0 to 39.9 percent
-#' B25070_009	Total: 40.0 to 49.9 percent
-#' B25070_010	Total: 50.0 percent or more
-#' B25070_011	Total: Not computed
+#' B25070_001	Total B25070_002	Total: Less than 10.0 percent B25070_003	Total:
+#' 10.0 to 14.9 percent B25070_004	Total: 15.0 to 19.9 percent B25070_005	Total:
+#' 20.0 to 24.9 percent B25070_006	Total: 25.0 to 29.9 percent B25070_007	Total:
+#' 30.0 to 34.9 percent B25070_008	Total: 35.0 to 39.9 percent B25070_009	Total:
+#' 40.0 to 49.9 percent B25070_010	Total: 50.0 percent or more B25070_011	Total:
+#' Not computed
 #'
 #' @param rentb a vacancy table, as from `multiyr.acs.wrapper(B25004, ...)`.
 #' @inheritParams acs.demographic.recode
@@ -327,20 +329,18 @@ acs.rentburden.recode <- function(rentb
 acs.commute.recode <- function(commutes
                              ,separate.carpools = F
                              ,filter.aggregates = T
-                             ,drop.obscure = T) {
+                             #,drop.obscure = T
+                             ) {
 
 
   commutes <- commutes %>%
-    filter(var %in% 1:16)
+    filter(var %in% 1:17)
 
   if(filter.aggregates)
     commutes <- commutes %>%
       filter( ! var %in% c(1,2, 8) )
 
-  if(drop.obscure)
-    commutes <- commutes %>%
-      filter( ! var %in% c(16) )
-
+  #if(drop.obscure) commutes <- commutes %>%  filter( ! var %in% c(16) )
 
   commutes <- commutes %>%
     mutate(recode = case_when(
@@ -348,7 +348,8 @@ acs.commute.recode <- function(commutes
       ,var %in% c(4:7) ~ 'Carpooled'
       ,var %in% c(8:13) ~ 'Public transit'
       ,var %in% c(14:15) ~ 'Active transit'
-      ,TRUE ~ label    )
+      ,var %in% c(16) ~ 'Work from home'
+      ,TRUE ~ 'Other') # label)
     )
 
 

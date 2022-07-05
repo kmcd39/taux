@@ -4,12 +4,7 @@
 \alias{acs.commute.recode}
 \title{acs.commute.recode}
 \usage{
-acs.commute.recode(
-  commutes,
-  separate.carpools = F,
-  filter.aggregates = T,
-  drop.obscure = T
-)
+acs.commute.recode(commutes, separate.carpools = F, filter.aggregates = T)
 }
 \arguments{
 \item{commutes}{a pull of table B08006, as from \code{multiyr.acs.wrapper(...)}.}

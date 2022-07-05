@@ -8,13 +8,17 @@ tidycensus2recoded.tblList(
   states,
   years,
   geo = "tract",
-  tbls = c("B03002", "B25034", "B25004", "B25070")
+  tbls = c("B03002", "B25034", "B25004", "B25070"),
+  metadata = NULL,
+  survey = "acs5"
 )
 }
 \arguments{
 \item{states}{vector of state FIPS or 2-letters}
 
 \item{years}{vector of years}
+
+\item{geo}{selection geography, passed onto \code{tidycensus}}
 }
 \description{
 Wrapper function to pull all categorical information for which there's recode
