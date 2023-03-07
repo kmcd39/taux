@@ -20,7 +20,9 @@ output:
 knitr::opts_chunk$set(echo = F
                       ,message = F
                       ,warning = F
-                      ,fig.width=9, fig.height=8)
+                      ,dpi=300
+                      ,fig.width=5.5
+                      ,fig.height=4.8)
 library(tidyverse)
 options(tigris_use_cache = TRUE)
 
